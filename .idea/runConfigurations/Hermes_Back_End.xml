@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Hermes Back-End" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="hermes-backend" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.hua.hermes.SpringBootBackendApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndTriggerFile" />
+    <envs>
+      <env name="DB_URL" value="localhost:3306" />
+      <env name="DB_SCHEMA" value="hermes" />
+      <env name="DB_USER" value="root" />
+      <env name="DB_PASS" value="root" />
+      <env name="KEYCLOAK_URL" value="localhost:8081" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
