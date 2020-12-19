@@ -1,13 +1,9 @@
-package org.hua.hermes.security;
+package org.hua.hermes.util.security;
 
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 /**
  * Helper class that gives instant access to attributes of Keycloak's principal.

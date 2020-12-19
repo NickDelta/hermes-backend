@@ -8,8 +8,6 @@ target/
 *.iws
 *.iml
 *.ipr
-.idea/libraries
-.idea/*.xml
 
 ### VS Code ###
 .vscode/

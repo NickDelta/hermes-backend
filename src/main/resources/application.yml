@@ -15,6 +15,12 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    hibernate:
+      ddl-auto: update #Normally not used in production - but our back-end is really small
+server:
+  error:
+    include-stacktrace: never #Prevent sensitive info exposure
+    include-message: never #Prevent sensitive info exposure
 logging:
   level:
     root: info
