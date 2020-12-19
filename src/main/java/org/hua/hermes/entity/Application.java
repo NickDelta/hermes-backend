@@ -26,14 +26,14 @@ public class Application extends AbstractEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "applicationState")
-    private ApplicationState applicationState;
+    @Column(name = "state")
+    private ApplicationState state;
 
     @Column(name = "details")
     private String details;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Future
-    @Column(name = "appointmentDate")
+    @Column(name = "appointment_date")
     private Date appointmentDate;
 }

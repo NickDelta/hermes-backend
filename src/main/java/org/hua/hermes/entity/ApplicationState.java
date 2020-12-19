@@ -5,5 +5,6 @@ public enum ApplicationState {
     APPROVED,
     COMPLETED,
     CANCELED,
-    REJECTED;
+    REJECTED,
+    RESUBMISSION_REQUIRED;
 }
