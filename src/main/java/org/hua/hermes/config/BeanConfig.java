@@ -1,9 +1,11 @@
 package org.hua.hermes.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hua.hermes.exception.ResourceNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.SimpleDateFormat;
 import java.util.function.Supplier;
 
 @Configuration
@@ -16,5 +18,10 @@ public class BeanConfig
     public Supplier<ResourceNotFoundException> resourceNotFoundExceptionSupplier()
     {
         return () -> new ResourceNotFoundException();
+    }
+
+    @Bean
+    public ObjectMapper jacksonObjectMapper(){
+        return new ObjectMapper().setDateFormat(new SimpleDateFormat("dd-MM-yyyy'Τ'HH:mm:ss"));
     }
 }
