@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,6 +30,19 @@ public class GlobalExceptionHandlers
         List<String> errors = ex.getBindingResult().getAllErrors()
                 .stream()
                 .map(x-> x.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.badRequest().body(Map.of("errors",errors));
+    }
+
+    //Exception controller when @Validated fails
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintValidationException(ConstraintViolationException ex)
+    {
+        List<String> errors = ex
+                .getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
 
         return ResponseEntity.badRequest().body(Map.of("errors",errors));

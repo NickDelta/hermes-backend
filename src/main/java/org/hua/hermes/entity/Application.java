@@ -32,6 +32,7 @@ public class Application extends AbstractEntity {
     @Column(name = "details")
     private String details;
 
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Future
     @Column(name = "appointment_date")
