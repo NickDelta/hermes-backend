@@ -14,9 +14,9 @@ import java.util.Optional;
  */
 public interface OrganizationApplicationRepository extends JpaRepository<Application,String>
 {
-    @Query("SELECT a FROM Application a WHERE a.organization = ?#{@keycloakTokenHelper.group.parent.name}")
+    @Query("SELECT a FROM Application a WHERE a.organization = ?#{@keycloakTokenHelper.group.parent.id}")
     Page<Application> findAll(Pageable pageable);
 
-    @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).organization == @keycloakTokenHelper.group.parent.name")
+    @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).organization == @keycloakTokenHelper.group.parent.id")
     Optional<Application> findById(String id);
 }
