@@ -1,4 +1,4 @@
-package org.hua.hermes.util.persistence;
+package org.hua.hermes.data;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

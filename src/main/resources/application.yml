@@ -17,6 +17,8 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update #Normally not used in production - but our back-end is really small
+  jackson:
+    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy
 server:
   error:
     include-stacktrace: never #Prevent sensitive info exposure

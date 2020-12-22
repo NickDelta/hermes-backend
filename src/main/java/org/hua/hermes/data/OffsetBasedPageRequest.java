@@ -1,4 +1,4 @@
-package org.hua.hermes.util.persistence;
+package org.hua.hermes.data;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

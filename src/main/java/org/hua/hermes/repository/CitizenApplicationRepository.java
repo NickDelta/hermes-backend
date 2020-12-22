@@ -1,6 +1,6 @@
 package org.hua.hermes.repository;
 
-import org.hua.hermes.entity.Application;
+import org.hua.hermes.data.entity.Application;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
