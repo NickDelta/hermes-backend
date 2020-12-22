@@ -8,17 +8,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.net.URI;
 
 @RestController
 @RequestMapping("/citizen/application")
 public class CitizenController {
 
-    @Autowired
     private CitizenService citizenService;
 
+    public CitizenController(CitizenService citizenService) {
+        this.citizenService = citizenService;
+    }
+
     @GetMapping
-    public ResponseEntity<?> getApplications(@Valid @RequestParam("offset") Integer offset,@Valid @RequestParam("limit") Integer limit){
+    public ResponseEntity<?> getApplications(@RequestParam("offset") @Min(0) Integer offset, @Valid @RequestParam("limit") @Min(1) Integer limit){
         var applications = citizenService.getListOfApplications(offset,limit);
         return ResponseEntity.ok(applications);
     }
@@ -31,8 +36,11 @@ public class CitizenController {
 
     @PostMapping
     public ResponseEntity<?> addApplication(@Valid @RequestBody Application application){
-        URI location = citizenService.addApplication(application);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(citizenService.addApplication(application).getId()).toUri();
+
         return ResponseEntity.created(location).build();
+
     }
 
     @PutMapping("/{id}")

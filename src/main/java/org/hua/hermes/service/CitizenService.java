@@ -6,9 +6,7 @@ import org.hua.hermes.repository.CitizenApplicationRepository;
 import org.hua.hermes.util.persistence.OffsetBasedPageRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 @Service
 public class CitizenService {
@@ -20,20 +18,16 @@ public class CitizenService {
 
     public List<Application> getListOfApplications(Integer offset,Integer limit){
         var page = new OffsetBasedPageRequest(offset,limit);
-        var applications = citizenApplicationRepository.findAll(page).getContent();
-        return applications;
+        return citizenApplicationRepository.findAll(page).getContent();
     }
 
-    public URI addApplication(Application application){
+    public Application addApplication(Application application){
         var savedComment = citizenApplicationRepository.saveAndFlush(application);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedComment.getId()).toUri();
-        return location;
+        return savedComment;
     }
 
     public Application getApplication(String id){
-        var application = citizenApplicationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+        var application = citizenApplicationRepository.findById(id).get(); //@PostAuthorize covers null case
         return application;
     }
 
