@@ -2,28 +2,33 @@ package org.hua.hermes.controller;
 
 import org.hua.hermes.entity.Application;
 import org.hua.hermes.service.CitizenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
+/**
+ * @author Vivian Gourgioti
+ */
 @RestController
 @RequestMapping("/citizen/application")
+@Validated
 public class CitizenController {
 
-    private CitizenService citizenService;
+    private final CitizenService citizenService;
 
     public CitizenController(CitizenService citizenService) {
         this.citizenService = citizenService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getApplications(@RequestParam("offset") @Min(0) Integer offset, @Valid @RequestParam("limit") @Min(1) Integer limit){
+    public ResponseEntity<?> getApplications(@RequestParam("offset") @NotNull @Min(0) Integer offset,
+                                             @RequestParam("limit") @NotNull @Min(1) Integer limit){
         var applications = citizenService.getListOfApplications(offset,limit);
         return ResponseEntity.ok(applications);
     }
@@ -36,20 +41,24 @@ public class CitizenController {
 
     @PostMapping
     public ResponseEntity<?> addApplication(@Valid @RequestBody Application application){
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(citizenService.addApplication(application).getId()).toUri();
+
+        var savedApplication = citizenService.addApplication(application);
+
+        //Get the location of the new resource
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedApplication.getId())
+                .toUri();
 
         return ResponseEntity.created(location).build();
-
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateApplication(@PathVariable String id,
-                                           @Valid @RequestBody Application updatedApplication)
+                                               @Valid @RequestBody Application updatedApplication)
     {
         citizenService.updateApplication(id,updatedApplication);
         return ResponseEntity.ok().build();
     }
-
 
 }

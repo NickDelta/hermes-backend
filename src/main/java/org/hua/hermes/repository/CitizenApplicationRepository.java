@@ -9,6 +9,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 
 import java.util.Optional;
 
+/**
+ * @author Vivian Gourgioti
+ */
 public interface CitizenApplicationRepository extends JpaRepository<Application,String> {
 
     @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).createdBy == authentication.name")
