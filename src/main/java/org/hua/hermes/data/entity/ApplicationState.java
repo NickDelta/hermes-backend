@@ -1,4 +1,4 @@
-package org.hua.hermes.entity;
+package org.hua.hermes.data.entity;
 
 public enum ApplicationState {
     SUBMITTED,
@@ -6,5 +6,5 @@ public enum ApplicationState {
     COMPLETED,
     CANCELED,
     REJECTED,
-    RESUBMISSION_REQUIRED;
+    RESUBMISSION_REQUIRED
 }

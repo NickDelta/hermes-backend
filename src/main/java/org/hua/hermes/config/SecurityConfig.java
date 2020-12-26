@@ -47,6 +47,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .disable()
             .authorizeRequests()
                 .mvcMatchers("/citizen/application/**").hasRole("CITIZEN")
-                .anyRequest().authenticated();
+                .mvcMatchers("/organization/application/**").hasRole("ORG_EMPLOYEE")
+                .anyRequest().denyAll();
     }
 }

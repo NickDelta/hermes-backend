@@ -1,14 +1,16 @@
-package org.hua.hermes.entity;
+package org.hua.hermes.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -20,21 +22,24 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Application extends AbstractEntity {
-    @NotEmpty
+
+    @NotEmpty(message = "{entity.application.organization.notempty}")
     @Column(name = "organization")
     private String organization;
 
-    @NotNull
+    @NotNull(message = "{entity.application.state.notnull}")
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     private ApplicationState state;
 
+    @Size(max = 1024, message = "{entity.application.details.size}")
     @Column(name = "details")
     private String details;
 
-    @NotNull
+    @NotNull(message = "{entity.application.appointmentDate.notnull}")
+    @Future(message = "{entity.application.appointmentDate.future}")
     @Temporal(TemporalType.TIMESTAMP)
-    @Future
     @Column(name = "appointment_date")
     private Date appointmentDate;
+
 }

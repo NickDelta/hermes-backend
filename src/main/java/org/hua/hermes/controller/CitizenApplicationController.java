@@ -1,7 +1,7 @@
 package org.hua.hermes.controller;
 
-import org.hua.hermes.entity.Application;
-import org.hua.hermes.service.CitizenService;
+import org.hua.hermes.data.entity.Application;
+import org.hua.hermes.service.CitizenApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,31 +18,38 @@ import java.net.URI;
 @RestController
 @RequestMapping("/citizen/application")
 @Validated
-public class CitizenController {
+public class CitizenApplicationController
+{
 
-    private final CitizenService citizenService;
+    private final CitizenApplicationService citizenApplicationService;
 
-    public CitizenController(CitizenService citizenService) {
-        this.citizenService = citizenService;
+    public CitizenApplicationController(CitizenApplicationService citizenApplicationService) {
+        this.citizenApplicationService = citizenApplicationService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getApplications(@RequestParam("offset") @NotNull @Min(0) Integer offset,
-                                             @RequestParam("limit") @NotNull @Min(1) Integer limit){
-        var applications = citizenService.getListOfApplications(offset,limit);
+    public ResponseEntity<?> getApplications(@RequestParam("offset")
+                                             @NotNull(message = "{offset.notnull}")
+                                             @Min(value = 0,message = "{offset.min}") Integer offset,
+
+                                             @RequestParam("limit")
+                                             @NotNull(message = "{limit.notnull}")
+                                             @Min(value = 1,message = "{limit.min}")  Integer limit)
+    {
+        var applications = citizenApplicationService.getListOfApplications(offset,limit);
         return ResponseEntity.ok(applications);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Application> getApplication(@PathVariable String id){
-        var application = citizenService.getApplication(id);
+        var application = citizenApplicationService.getApplication(id);
         return ResponseEntity.ok(application);
     }
 
     @PostMapping
     public ResponseEntity<?> addApplication(@Valid @RequestBody Application application){
 
-        var savedApplication = citizenService.addApplication(application);
+        var savedApplication = citizenApplicationService.addApplication(application);
 
         //Get the location of the new resource
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -57,7 +64,7 @@ public class CitizenController {
     public ResponseEntity<?> updateApplication(@PathVariable String id,
                                                @Valid @RequestBody Application updatedApplication)
     {
-        citizenService.updateApplication(id,updatedApplication);
+        citizenApplicationService.updateApplication(id,updatedApplication);
         return ResponseEntity.ok().build();
     }
 

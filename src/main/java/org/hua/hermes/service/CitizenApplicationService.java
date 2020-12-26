@@ -1,8 +1,8 @@
 package org.hua.hermes.service;
 
-import org.hua.hermes.entity.Application;
+import org.hua.hermes.data.OffsetBasedPageRequest;
+import org.hua.hermes.data.entity.Application;
 import org.hua.hermes.repository.CitizenApplicationRepository;
-import org.hua.hermes.util.persistence.OffsetBasedPageRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,11 @@ import java.util.List;
  * @author Vivian Gourgioti
  */
 @Service
-public class CitizenService {
-    private CitizenApplicationRepository citizenApplicationRepository;
+public class CitizenApplicationService
+{
+    private final CitizenApplicationRepository citizenApplicationRepository;
 
-    public CitizenService(CitizenApplicationRepository citizenApplicationRepository) {
+    public CitizenApplicationService(CitizenApplicationRepository citizenApplicationRepository) {
         this.citizenApplicationRepository = citizenApplicationRepository;
     }
 

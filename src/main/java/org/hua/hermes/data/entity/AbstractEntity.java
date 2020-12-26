@@ -1,4 +1,4 @@
-package org.hua.hermes.entity;
+package org.hua.hermes.data.entity;
 
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,7 +17,7 @@ public abstract class AbstractEntity
 {
 
     @Id
-    @GenericGenerator(name = "UUIDGenerator",strategy = "org.hua.hermes.util.persistence.UUIDGenerator")
+    @GenericGenerator(name = "UUIDGenerator",strategy = "org.hua.hermes.data.UUIDGenerator")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
 
@@ -28,17 +28,17 @@ public abstract class AbstractEntity
     @CreatedDate
     private Date createdDate;
 
-    @Column(name = "modified_date")
+    @Column(name = "last_modified_date")
     @LastModifiedDate
-    private Date modifiedDate;
+    private Date lastModifiedDate;
 
     @Column(name = "created_by")
     @CreatedBy
     private String createdBy;
 
-    @Column(name = "modified_by")
+    @Column(name = "last_modified_by")
     @LastModifiedBy
-    private String modifiedBy;
+    private String lastModifiedBy;
 
     @Override
     public int hashCode() {
