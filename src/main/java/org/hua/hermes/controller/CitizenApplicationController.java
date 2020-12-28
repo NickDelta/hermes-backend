@@ -72,5 +72,4 @@ public class CitizenApplicationController
     public ResponseEntity<?> applicationNumberByCitizen() {
         return ResponseEntity.ok(citizenApplicationService.getCitizenApplicationNumber());
     }
-
 }

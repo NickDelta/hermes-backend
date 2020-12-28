@@ -20,6 +20,6 @@ public interface CitizenApplicationRepository extends JpaRepository<Application,
     @Query("SELECT a FROM Application a WHERE a.createdBy = ?#{authentication.name}")
     Page<Application> findAll(Pageable pageable);
 
-    @Query("SELECT ap FROM Application ap WHERE ap.createdBy = ?#{authentication.name}")
+    @Query("SELECT COUNT(ap.id) FROM Application ap WHERE ap.createdBy = ?#{authentication.name}")
     long count();
 }

@@ -20,6 +20,6 @@ public interface OrganizationApplicationRepository extends JpaRepository<Applica
     @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).organization == @keycloakTokenHelper.group.parent.id")
     Optional<Application> findById(String id);
 
-    @Query("SELECT ap FROM Application ap WHERE ap.organization = ?#{@keycloakTokenHelper.group.parent.id}")
+    @Query("SELECT COUNT(ap.id) FROM Application ap WHERE ap.organization = ?#{@keycloakTokenHelper.group.parent.id}")
     long count();
 }

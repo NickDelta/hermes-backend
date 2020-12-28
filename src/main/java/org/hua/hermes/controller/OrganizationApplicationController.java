@@ -59,5 +59,4 @@ public class OrganizationApplicationController
     public ResponseEntity<?> applicationNumberByOrganization() {
         return ResponseEntity.ok(organizationApplicationService.getOrganizationApplicationNumber());
     }
-
 }
