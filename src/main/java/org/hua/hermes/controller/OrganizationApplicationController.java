@@ -55,4 +55,9 @@ public class OrganizationApplicationController
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<?> applicationNumberByOrganization() {
+        return ResponseEntity.ok(organizationApplicationService.getOrganizationApplicationNumber());
+    }
+
 }

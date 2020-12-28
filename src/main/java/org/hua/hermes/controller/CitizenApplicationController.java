@@ -68,4 +68,9 @@ public class CitizenApplicationController
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<?> applicationNumberByCitizen() {
+        return ResponseEntity.ok(citizenApplicationService.getCitizenApplicationNumber());
+    }
+
 }

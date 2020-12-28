@@ -40,4 +40,7 @@ public class OrganizationApplicationService
         organizationApplicationRepository.saveAndFlush(savedApplication);
     }
 
+    public Long getOrganizationApplicationNumber() {
+        return  organizationApplicationRepository.count();
+    }
 }

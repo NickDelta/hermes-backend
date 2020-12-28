@@ -6,6 +6,7 @@ import org.hua.hermes.repository.CitizenApplicationRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -37,6 +38,10 @@ public class CitizenApplicationService
         var currentApplication = citizenApplicationRepository.findById(id).get(); //@PostAuthorize covers null case
         BeanUtils.copyProperties(updatedApplication,currentApplication);
         return citizenApplicationRepository.saveAndFlush(currentApplication);
+    }
+
+    public Long getCitizenApplicationNumber() {
+        return citizenApplicationRepository.count();
     }
 }
 
