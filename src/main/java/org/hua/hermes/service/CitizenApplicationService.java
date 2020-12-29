@@ -25,12 +25,16 @@ public class CitizenApplicationService
         return citizenApplicationRepository.findAll(page).getContent();
     }
 
-    public Application addApplication(Application application){
-        return citizenApplicationRepository.saveAndFlush(application);
-    }
-
     public Application getApplication(String id){
         return citizenApplicationRepository.findById(id).get();
+    }
+
+    public Long getCitizenApplicationNumber() {
+        return citizenApplicationRepository.count();
+    }
+
+    public Application addApplication(Application application){
+        return citizenApplicationRepository.saveAndFlush(application);
     }
 
     public Application updateApplication(String id,Application updatedApplication){
@@ -38,5 +42,6 @@ public class CitizenApplicationService
         BeanUtils.copyProperties(updatedApplication,currentApplication);
         return citizenApplicationRepository.saveAndFlush(currentApplication);
     }
+
 }
 

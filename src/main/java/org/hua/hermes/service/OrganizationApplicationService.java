@@ -33,11 +33,16 @@ public class OrganizationApplicationService
         return organizationApplicationRepository.findById(id).get();
     }
 
+    public Long getOrganizationApplicationNumber() {
+        return  organizationApplicationRepository.count();
+    }
+
     public void updateApplication(String id, Application application)
     {
         var savedApplication = organizationApplicationRepository.findById(id).get();
         BeanUtils.copyProperties(application,savedApplication);
         organizationApplicationRepository.saveAndFlush(savedApplication);
     }
+
 
 }

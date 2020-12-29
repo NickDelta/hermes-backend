@@ -46,6 +46,12 @@ public class CitizenApplicationController
         return ResponseEntity.ok(application);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<?> applicationNumberByCitizen() {
+        Long count = citizenApplicationService.getCitizenApplicationNumber();
+        return ResponseEntity.ok(count);
+    }
+
     @PostMapping
     public ResponseEntity<?> addApplication(@Valid @RequestBody Application application){
 
@@ -67,5 +73,6 @@ public class CitizenApplicationController
         citizenApplicationService.updateApplication(id,updatedApplication);
         return ResponseEntity.ok().build();
     }
+
 
 }

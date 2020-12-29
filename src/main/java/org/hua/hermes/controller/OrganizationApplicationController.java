@@ -47,6 +47,12 @@ public class OrganizationApplicationController
         return ResponseEntity.ok(application);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<?> applicationNumberByOrganization() {
+        Long count = organizationApplicationService.getOrganizationApplicationNumber();
+        return ResponseEntity.ok(count);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateApplication(@PathVariable String id,
                                                @RequestBody @Valid Application application)
@@ -54,5 +60,6 @@ public class OrganizationApplicationController
         organizationApplicationService.updateApplication(id,application);
         return ResponseEntity.ok().build();
     }
+
 
 }
