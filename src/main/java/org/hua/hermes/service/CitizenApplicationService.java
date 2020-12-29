@@ -6,7 +6,6 @@ import org.hua.hermes.repository.CitizenApplicationRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -26,12 +25,16 @@ public class CitizenApplicationService
         return citizenApplicationRepository.findAll(page).getContent();
     }
 
-    public Application addApplication(Application application){
-        return citizenApplicationRepository.saveAndFlush(application);
-    }
-
     public Application getApplication(String id){
         return citizenApplicationRepository.findById(id).get();
+    }
+
+    public Long getCitizenApplicationNumber() {
+        return citizenApplicationRepository.count();
+    }
+
+    public Application addApplication(Application application){
+        return citizenApplicationRepository.saveAndFlush(application);
     }
 
     public Application updateApplication(String id,Application updatedApplication){
@@ -40,8 +43,5 @@ public class CitizenApplicationService
         return citizenApplicationRepository.saveAndFlush(currentApplication);
     }
 
-    public Long getCitizenApplicationNumber() {
-        return citizenApplicationRepository.count();
-    }
 }
 
