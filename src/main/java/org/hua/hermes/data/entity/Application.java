@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,7 +36,7 @@ public class Application extends AbstractEntity {
     private String details;
 
     @NotNull(message = "{entity.application.appointmentDate.notnull}")
-    @Future(message = "{entity.application.appointmentDate.future}")
+    //@Future(message = "{entity.application.appointmentDate.future}") Removed for convenience
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointment_date")
     private Date appointmentDate;

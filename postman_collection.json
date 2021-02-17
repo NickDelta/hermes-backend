@@ -1,79 +1,464 @@
 {
 	"info": {
-		"_postman_id": "9452976f-ceb3-497d-ad4e-a39b6b1f1540",
-		"name": "Hermes Backend",
+		"_postman_id": "f0478b14-a4c5-4828-b979-881ac6ca7c4f",
+		"name": "Hermes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Access Token",
-			"event": [
+			"name": "Keycloak",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "d79a7382-d6b3-4dbf-b783-beef344722d9",
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"pm.collectionVariables.set(\"access_token\",jsonData.access_token);"
-						],
-						"type": "text/javascript"
-					}
+					"name": "Get Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"access_token\",jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "delta",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "internal-frontend",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{KEYCLOAK_URL}}/auth/realms/hermes/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"{{KEYCLOAK_URL}}"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"hermes",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						},
+						"description": "Get the bearer token for authenticated access."
+					},
+					"response": []
 				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
+			]
+		},
+		{
+			"name": "Back-End",
+			"item": [
+				{
+					"name": "Citizen",
+					"item": [
 						{
-							"key": "username",
-							"value": "delta",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "12345",
-							"type": "text"
-						},
-						{
-							"key": "client_id",
-							"value": "internal-frontend",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
+							"name": "Applications",
+							"item": [
+								{
+									"name": "Get All Applications",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/citizen/application?offset=&limit=",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"citizen",
+												"application"
+											],
+											"query": [
+												{
+													"key": "offset",
+													"value": ""
+												},
+												{
+													"key": "limit",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Application By Id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/citizen/application/{id}",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"citizen",
+												"application",
+												"{id}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Application Count",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/citizen/application/count",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"citizen",
+												"application",
+												"count"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create New Application",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"organization\": \"a0af9513-3ddc-4bb9-8f26-0a2c594916cf\",\n    \"state\": \"SUBMITTED\",\n    \"details\": \"I want teaching service\",\n    \"appointment_date\": \"2020-12-30T18:00:00.000+00:00\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/citizen/application",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"citizen",
+												"application"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Application",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"organization\": \"HUA\",\n    \"state\": \"COMPLETED\",\n    \"details\": \"I want nice service\",\n    \"appointmentDate\": \"2020-12-23T18:00:00.000+00:00\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/citizen/application/{id}",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"citizen",
+												"application",
+												"{id}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{KEYCLOAK_URL}}/auth/realms/hermes/protocol/openid-connect/token",
-					"protocol": "http",
-					"host": [
-						"{{KEYCLOAK_URL}}"
-					],
-					"path": [
-						"auth",
-						"realms",
-						"hermes",
-						"protocol",
-						"openid-connect",
-						"token"
 					]
 				},
-				"description": "Get the bearer token for authenticated access."
-			},
-			"response": []
+				{
+					"name": "Organization Employee",
+					"item": [
+						{
+							"name": "Applications",
+							"item": [
+								{
+									"name": "Get All Applications",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/organization/application?offset=0&limit=10",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"organization",
+												"application"
+											],
+											"query": [
+												{
+													"key": "offset",
+													"value": "0"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Application By Id",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/organization/application/{id}",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"organization",
+												"application",
+												"{id}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Application",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"organization\": \"HUA\",\n    \"state\": \"COMPLETED\",\n    \"details\": \"I want nice service\",\n    \"appointment_date\": \"30-12-2020Τ17:32:24\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/corganization/application/{id}",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"corganization",
+												"application",
+												"{id}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Organization's Application Count",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://{{BACKEND_URL}}/organization/application/count",
+											"protocol": "http",
+											"host": [
+												"{{BACKEND_URL}}"
+											],
+											"path": [
+												"organization",
+												"application",
+												"count"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {
@@ -90,7 +475,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1c0fe6fd-560c-4b24-b3ec-d82b6a00503e",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -100,7 +484,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0c45d130-f0d6-4d3b-a9e0-3af9c41d08f3",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -110,20 +493,16 @@
 	],
 	"variable": [
 		{
-			"id": "c2598025-7b22-462b-a125-c8668a74dce4",
 			"key": "KEYCLOAK_URL",
 			"value": "localhost:8081"
 		},
 		{
-			"id": "5d33ef85-52e5-41ab-8925-7b8e905b369d",
 			"key": "BACKEND_URL",
-			"value": "localhost:8082"
+			"value": "localhost:8080"
 		},
 		{
-			"id": "eab71756-f083-46ff-bb0d-f42903e696dd",
 			"key": "access_token",
 			"value": ""
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

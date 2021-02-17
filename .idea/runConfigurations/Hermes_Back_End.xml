@@ -9,7 +9,8 @@
       <env name="DB_SCHEMA" value="hermes" />
       <env name="DB_USER" value="root" />
       <env name="DB_PASS" value="root" />
-      <env name="KEYCLOAK_URL" value="localhost:8081" />
+      <env name="keycloak.auth-server-url" value="http://192.168.1.179:8001/auth" />
+      <env name="keycloak.credentials.secret" value="81f7d18a-b8b6-4ff9-86b1-ce6e18cb097b" />
     </envs>
     <method v="2">
       <option name="Make" enabled="true" />

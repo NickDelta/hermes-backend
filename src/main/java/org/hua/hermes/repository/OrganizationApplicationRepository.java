@@ -14,12 +14,12 @@ import java.util.Optional;
  */
 public interface OrganizationApplicationRepository extends JpaRepository<Application,String>
 {
-    @Query("SELECT a FROM Application a WHERE a.organization = ?#{@keycloakTokenHelper.group.parent.id}")
+    @Query("SELECT a FROM Application a WHERE a.organization = ?#{@keycloakTokenHelper.organization.id}")
     Page<Application> findAll(Pageable pageable);
 
-    @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).organization == @keycloakTokenHelper.group.parent.id")
+    @PostAuthorize("returnObject.orElseThrow(@resourceNotFoundExceptionSupplier).organization == @keycloakTokenHelper.organization.id")
     Optional<Application> findById(String id);
 
-    @Query("SELECT COUNT(ap.id) FROM Application ap WHERE ap.organization = ?#{@keycloakTokenHelper.group.parent.id}")
+    @Query("SELECT COUNT(ap.id) FROM Application ap WHERE ap.organization = ?#{@keycloakTokenHelper.organization.id}")
     long count();
 }
