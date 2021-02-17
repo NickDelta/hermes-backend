@@ -1,5 +1,4 @@
 keycloak:
-  auth-server-url: http://${KEYCLOAK_URL}/auth
   realm: hermes
   resource: backend
   principal-attribute: preferred_username
