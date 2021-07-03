@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+  namespace: hermes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db.ip
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db.user
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db.password
+            - name: DB_SCHEMA
+              value: hermes
+            - name: KEYCLOAK_AUTH_SERVER_URL
+              value: http://sso.hermesapp.xyz/auth
+            - name: KEYCLOAK_CREDENTIALS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-env-secret
+                  key: KEYCLOAK_CREDENTIALS_SECRET
+          image: europe-west2-docker.pkg.dev/hua-hermes/back-end/prod
+          imagePullPolicy: IfNotPresent
+          name: hermes-backend
+          ports:
+            - containerPort: 8080
+            - containerPort: 9001
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9001
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9001
+            initialDelaySeconds: 20
+            periodSeconds: 5
+      restartPolicy: Always

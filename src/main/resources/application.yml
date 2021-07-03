@@ -10,10 +10,6 @@ spring:
     password: ${DB_PASS}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
     hibernate:
       ddl-auto: update #Normally not used in production - but our back-end is really small
   jackson:
@@ -22,6 +18,13 @@ server:
   error:
     include-stacktrace: never #Prevent sensitive info exposure
     include-message: never #Prevent sensitive info exposure
-logging:
-  level:
-    root: info
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: 'health'
+  server:
+    port: 9001
